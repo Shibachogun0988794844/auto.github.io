@@ -1,41 +1,40 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <title>Auto Scrolling Page</title>
-    <script>
-        let scrollActive = false; // สถานะเริ่มต้น: ปิดการเลื่อน
-        let scrollSpeed = 10; // ความเร็วเลื่อน (ยิ่งน้อย ยิ่งเร็ว)
+<!-- เนเธชเนเนเธเนเธ”เธเธตเนเธฅเธเนเธเธชเนเธงเธ HTML (Embed Code) เธเธญเธ Google Sites -->
+<script>
+  let scrollingInterval = null;
 
-        function autoScroll() {
-            if (scrollActive) {
-                window.scrollBy(0, 1); // เลื่อนลง 1px
-                setTimeout(autoScroll, scrollSpeed);
-            }
-        }
+  function startScrolling(direction) {
+    // เน€เธฃเธดเนเธกเน€เธฅเธทเนเธญเธเนเธ”เธขเธเธณเธซเธเธ”เธ—เธดเธจเธ—เธฒเธ: 1 = เน€เธฅเธทเนเธญเธเธฅเธ, -1 = เน€เธฅเธทเนเธญเธเธเธถเนเธ
+    if (scrollingInterval) clearInterval(scrollingInterval);
+    scrollingInterval = setInterval(() => {
+      window.scrollBy(0, direction * 5); // เน€เธเธฅเธตเนเธขเธเธเนเธฒ 5 เน€เธเธทเนเธญเธเธฃเธฑเธเธเธงเธฒเธกเน€เธฃเนเธง
+    }, 20); // เน€เธเธฅเธตเนเธขเธเธเนเธฒ 20 เน€เธเธทเนเธญเธเธฃเธฑเธเธเธงเธฒเธกเธ–เธตเนเนเธเธเธฒเธฃเน€เธฅเธทเนเธญเธ
+  }
 
-        // ตรวจจับการกดปุ่ม C เพื่อเปิด-ปิดการเลื่อน
-        document.addEventListener("keydown", function(event) {
-            if (event.key.toLowerCase() === "c") {
-                event.preventDefault(); // ป้องกัน Chrome ใช้ปุ่ม C
-                scrollActive = !scrollActive; // สลับสถานะ
-                if (scrollActive) {
-                    autoScroll(); // ถ้าเปิด ให้เริ่มเลื่อน
-                }
-            }
-        });
-    </script>
-    <style>
-        body {
-            height: 2000px; /* ทำให้เว็บยาวขึ้น */
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>กดปุ่ม "C" เพื่อเปิด-ปิด การเลื่อนอัตโนมัติ</h1>
-    <p>หน้านี้สามารถเลื่อนลงอัตโนมัติได้เมื่อกดปุ่ม "C"</p>
-    <p>กด "C" อีกครั้งเพื่อหยุด</p>
-</body>
-</html>
+  function stopScrolling() {
+    if (scrollingInterval) {
+      clearInterval(scrollingInterval);
+      scrollingInterval = null;
+    }
+  }
+
+  // เธเธฑเธเน€เธซเธ•เธธเธเธฒเธฃเธ“เนเน€เธกเธทเนเธญเธเธ”เธเธธเนเธก
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowDown') {
+      // เธเธ”เธฅเธนเธเธจเธฃเธฅเธ: เน€เธฅเธทเนเธญเธเธฅเธ
+      startScrolling(1);
+    } else if (e.key === 'ArrowUp') {
+      // เธเธ”เธฅเธนเธเธจเธฃเธเธถเนเธ: เน€เธฅเธทเนเธญเธเธเธถเนเธ
+      startScrolling(-1);
+    } else if (e.key === ' ') {
+      // เธเธ” Space Bar: เธซเธขเธธเธ”เน€เธฅเธทเนเธญเธ
+      stopScrolling();
+    }
+  });
+
+  // เน€เธกเธทเนเธญเธเธฅเนเธญเธขเธเธธเนเธกเธฅเธนเธเธจเธฃ เนเธซเนเธซเธขเธธเธ”เน€เธฅเธทเนเธญเธ (เธ–เนเธฒเธ•เนเธญเธเธเธฒเธฃเนเธซเนเน€เธฅเธทเนเธญเธเน€เธเธเธฒเธฐเธ•เธญเธเธเธ”เธเนเธฒเธ)
+  document.addEventListener('keyup', function(e) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      stopScrolling();
+    }
+  });
+</script>
