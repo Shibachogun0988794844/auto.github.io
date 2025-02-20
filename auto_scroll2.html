@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Scrolling Page</title>
+    <script>
+        let scrollActive = false; // สถานะเริ่มต้น: ปิดการเลื่อน
+        let scrollSpeed = 10; // ความเร็วเลื่อน (ยิ่งน้อย ยิ่งเร็ว)
+
+        function autoScroll() {
+            if (scrollActive) {
+                window.scrollBy(0, 1); // เลื่อนลง 1px
+                setTimeout(autoScroll, scrollSpeed);
+            }
+        }
+
+        // ตรวจจับการกดปุ่ม C เพื่อเปิด-ปิดการเลื่อน
+        document.addEventListener("keydown", function(event) {
+            if (event.key.toLowerCase() === "c") {
+                event.preventDefault(); // ป้องกัน Chrome ใช้ปุ่ม C
+                scrollActive = !scrollActive; // สลับสถานะ
+                if (scrollActive) {
+                    autoScroll(); // ถ้าเปิด ให้เริ่มเลื่อน
+                }
+            }
+        });
+    </script>
+    <style>
+        body {
+            height: 2000px; /* ทำให้เว็บยาวขึ้น */
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>กดปุ่ม "C" เพื่อเปิด-ปิด การเลื่อนอัตโนมัติ</h1>
+    <p>หน้านี้สามารถเลื่อนลงอัตโนมัติได้เมื่อกดปุ่ม "C"</p>
+    <p>กด "C" อีกครั้งเพื่อหยุด</p>
+</body>
+</html>
